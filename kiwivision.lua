@@ -1334,7 +1334,7 @@ OldNameCall = hookmetamethod(game, "__namecall", function(...)
         end
         if tostring(args[1]) == "Falling_State" and method == "FireServer" then
             if noFall then
-                args[2] = 1
+                args[2] = 2
                 return OldNameCall(unpack(args))
             end
         end
@@ -1342,7 +1342,7 @@ OldNameCall = hookmetamethod(game, "__namecall", function(...)
             if hooktoggle == true and wl then
                 if silentAim == true then
                     local scrip = getcallingscript()
-                    if scrip == game.Players.LocalPlayer.Character[gunName].Setup.RC then
+                    if scrip == game.Players.LocalPlayer.Character[gunName].Setup.RCSMD then
                             if randomNum <= hitChance then
                                 local ray = createPlayerRay()
                                 if ray then
@@ -1384,7 +1384,7 @@ local Hook = function(self, ...)
     if self == game:GetService("ReplicatedStorage")["Remote_Events"]["Falling_State"]then 
         if noFall then
         local args = {...}
-        args[1] = 1
+        args[1] = 2
         return OldFunction(self, unpack(args))
         end
     end
