@@ -952,21 +952,6 @@ Section3:Button(
     end
 )
 print("loading esp...")
-game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function(character)
-    for i,dec in pairs(character:GetDescendants()) do
-        
-        if dec:IsA("Part") or dec:IsA("MeshPart") or dec:IsA("BasePart") then
-                        dec.Material = "ForceField"
-                        dec.Color = fromRGB(61, 176, 26)
-                        dec:GetPropertyChangedSignal("Color"):Connect(function()
-                            print("Color reverted")
-                             dec.Color = fromRGB(61, 176, 26)  
-                        end)
-    end
-    end
-    end
-    end)
-end)
 
 local espTick = tick()
 -- // Player Esp
