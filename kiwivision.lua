@@ -55,6 +55,7 @@ local noclipLoop
 print("Loading kiwi's (not so) legit cheat...")
 
 getgenv().targetPlayer = nil
+
 local espLib = loadstring(game:HttpGet("https://pastebin.com/raw/bhmauHcN"))()
 local players = game:GetService("Players")
 local runService = game:GetService("RunService")
@@ -116,7 +117,12 @@ for i, v in pairs(getconnections(game:GetService("LogService").MessageOut)) do
         v:Disable()
     end
 end
-
+local MemCache = game:GetService("Stats"):GetTotalMemoryUsageMb();
+function GenerateFakeMemory()
+    local random = math.random(1, 2);
+    local method = (random == 1 and "-") or "+";
+    return (method == "-" and (MemCache - (random / math.random(100, 200)))) or (MemCache + (random / math.random(100, 200)));
+end
 if KRNL_LOADED then
     print("Krnl version is messed up, but it's not my fault")
 end
@@ -1397,6 +1403,9 @@ OldNameCall = hookmetamethod(game, "__namecall", function(...)
             print("Blocked " .. tostring(args[1]))
            return 
         end
+	if not checkcaller() and tostring(method) == "GetTotalMemoryUsageMb" then
+        	return GenerateFakeMemory();
+    	end
         if tostring(args[1]) == "Enable_Particle" and args[2] == 1337 then
            print("Blocked Particle Remote") 
         end
@@ -1492,6 +1501,10 @@ local Hook = function(self, ...)
     return OldFunction(self, ...)
 end
 OldFunction = hookfunction(Instance.new("RemoteEvent").FireServer, Hook)
+local GetTotalMemoryUsageMb;
+GetTotalMemoryUsageMb = hookfunction(game:GetService("Stats").GetTotalMemoryUsageMb, function(Stats)
+    return GenerateFakeMemory();
+end)
 -- //
 print("loading misc drawing, keybinds, etc...")
 local misc = tick()
