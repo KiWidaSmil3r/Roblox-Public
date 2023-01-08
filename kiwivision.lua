@@ -76,6 +76,7 @@ local currentCamera = workspace.CurrentCamera
 local mouse = localPlayer:GetMouse()
 local RunService = game:GetService("RunService")
 local runService = game:GetService("RunService")
+local secureCall = syn.secure_call or KRNL_SECURE_CALL
 local team = {}
 local random = Random.new()
 local acCheck1 
@@ -1068,7 +1069,6 @@ espLib.Tracers = espTracers
 espLib.Boxes = espBoxes
 espLib:Toggle(true)
 
-players.PlayerAdded:Connect(playerAdded)
 Section2:Toggle(
     "Chams",
     "Enables chams esp",
@@ -1491,14 +1491,14 @@ end)
 --// Gun ignores
 local spoofCaller = game:GetService("Players").LocalPlayer.PlayerScripts.Client_Code.Client_Manager
 local gunIgnores = getrenv()._G.clientGunIgnores2
-local result = syn.secure_call(gunIgnores, spoofCaller)
+local result = secureCall(gunIgnores, spoofCaller)
 cGunIgnores = {}
 coroutine.wrap(function()
     while wait(5) do
         if visibleCheck then
         local spoofCaller = game:GetService("Players").LocalPlayer.PlayerScripts.Client_Code.Client_Manager
         local gunIgnores = getrenv()._G.clientGunIgnores2
-        cGunIgnores = syn.secure_call(gunIgnores, spoofCaller)
+        cGunIgnores = secureCall(gunIgnores, spoofCaller)
         end
     end
 end)()
