@@ -1068,101 +1068,6 @@ espLib.Tracers = espTracers
 espLib.Boxes = espBoxes
 espLib:Toggle(true)
 
---[[
-local function characterRemoving(char)
-    for i, v in next, tracking do
-        if v.char == char then
-            v:remove()
-            remove(tracking, i)
-        end
-    end
-end
-
-local function characterAdded(plr)
-    local char = plr.Character
-    char:WaitForChild("HumanoidRootPart")
-    char:WaitForChild("Head")
-    if isInTable(team, plr.Name) == false then
-        tracking[#tracking + 1] =
-            OwlESP.new(
-            {
-                plr = plr,
-                espBoxVisible = true,
-                tracerVisible = true,
-                text = plr.Name,
-                teamCheck = teamCheck,
-                espColor = espColor
-            }
-        )
-    else
-        tracking[#tracking + 1] =
-            OwlESP.new(
-            {
-                plr = plr,
-                espBoxVisible = true,
-                tracerVisible = true,
-                text = plr.Name,
-                teamCheck = teamCheck,
-                espColor = teamEspColor
-            }
-        )
-    end
-end
-
-for i, v in next, players:GetPlayers() do
-    if v ~= localPlayer then
-        local char = v.Character
-        if boxEsp then
-        if char and char:FindFirstChild("HumanoidRootPart") and char:FindFirstChild("Head") then
-            if isInTable(team, v.Name) == false then
-                tracking[#tracking + 1] =
-                    OwlESP.new(
-                    {
-                        plr = v,
-                        espBoxVisible = true,
-                        tracerVisible = true,
-                        text = v.Name,
-                        teamCheck = teamCheck,
-                        espColor = espColor
-                    }
-                )
-            else
-                tracking[#tracking + 1] =
-                    OwlESP.new(
-                    {
-                        plr = v,
-                        espBoxVisible = true,
-                        tracerVisible = true,
-                        text = v.Name,
-                        teamCheck = teamCheck,
-                        espColor = teamEspColor
-                    }
-                )
-            end
-        end
-    end
-        v.CharacterAdded:Connect(
-            function()
-                if boxEsp then
-                    characterAdded(v)
-                end
-            end
-        )
-        v.CharacterRemoving:Connect(characterRemoving)
-    end
-end
-
-local function playerAdded(plr)
-    plr.CharacterAdded:Connect(
-        function()
-            if boxEsp then
-                characterAdded(plr)
-            end
-        end
-    )
-    plr.CharacterRemoving:Connect(characterRemoving)
-end
---]]
 players.PlayerAdded:Connect(playerAdded)
 Section2:Toggle(
     "Chams",
@@ -1776,4 +1681,3 @@ runService.RenderStepped:Connect(
     end
 )
 print("Loaded in " .. tick() - startTick)
-
