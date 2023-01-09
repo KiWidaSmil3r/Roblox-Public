@@ -1342,7 +1342,7 @@ OldNameCall = hookmetamethod(game, "__namecall", function(...)
             if hooktoggle == true and wl then
                 if silentAim == true then
                     local scrip = getcallingscript()
-                    if scrip == game.Players.LocalPlayer.Character[gunName].Setup.RCSMD then
+                    if scrip == game.Players.LocalPlayer.Character[gunName].Setup.RCSMDX then --How many times are we going to do this, Jurrd?
                             if randomNum <= hitChance then
                                 local ray = createPlayerRay()
                                 if ray then
@@ -1373,7 +1373,7 @@ end)
 
 local OldFunction
 local Hook = function(self, ...)
-    if self == game:GetService("ReplicatedStorage")["Remote_Events"]["Update_Joints"] then
+    if self == game:GetService("ReplicatedStorage")["Remote_Events"]["Update_JointsX"] then
         if antiAim then
             local args = {...}
             args[1] = getgenv().Options["C1"]
