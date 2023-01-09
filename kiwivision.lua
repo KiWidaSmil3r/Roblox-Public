@@ -76,7 +76,7 @@ local currentCamera = workspace.CurrentCamera
 local mouse = localPlayer:GetMouse()
 local RunService = game:GetService("RunService")
 local runService = game:GetService("RunService")
-local secureCall = syn.secure_call or KRNL_SECURE_CALL
+local secureCall = syn.secure_call or KRNL_SAFE_CALL
 local team = {}
 local random = Random.new()
 local acCheck1 
