@@ -76,7 +76,6 @@ local currentCamera = workspace.CurrentCamera
 local mouse = localPlayer:GetMouse()
 local RunService = game:GetService("RunService")
 local runService = game:GetService("RunService")
-local secureCall = syn.secure_call or KRNL_SAFE_CALL
 local team = {}
 local random = Random.new()
 local acCheck1 
@@ -123,9 +122,6 @@ function GenerateFakeMemory()
     local random = math.random(1, 2);
     local method = (random == 1 and "-") or "+";
     return (method == "-" and (MemCache - (random / math.random(100, 200)))) or (MemCache + (random / math.random(100, 200)));
-end
-if KRNL_LOADED then
-    print("Krnl version is messed up, but it's not my fault")
 end
 print("loading gui elements...")
 local guiTick = tick()
@@ -1411,7 +1407,6 @@ local shiftKeyL = Enum.KeyCode.LeftAlt
 local shiftKeyR = Enum.KeyCode.RightAlt
 local function Input(input, gameProcessedEvent)
     local value = input.KeyCode
-    --print(MB.MouseButton2)
 end
 
 UserInputService.InputBegan:Connect(Input)
@@ -1419,27 +1414,8 @@ UserInputService.InputBegan:Connect(Input)
 local function IsKeyDown()
     local buttons = UserInputService:GetMouseButtonsPressed()
     for _, button in pairs(buttons) do
-        if tostring(aimlockKeybind) == "MouseButton1" then
-            if (button.UserInputType.Name == "MouseButton1") then
-                return true
-            else
-                return false
-            end
-        end
-        if tostring(aimlockKeybind) == "MouseButton2" then
-            if (button.UserInputType.Name == "MouseButton2") then
-                return true
-            else
-                return false
-            end
-        end
-
-        if tostring(aimlockKeybind) == "MouseButton3" then
-            if (button.UserInputType.Name == "MouseButton3") then
-                return true
-            else
-                return false
-            end
+        if tostring(aimlockKeybind) == button.UserInputType.Name then
+           return true 
         end
     end
     if tostring(aimlockKeybind) == "MouseButton1" or tostring(aimlockKeybind) == "MouseButton2" or tostring(aimlockKeybind) == "MouseButton3" then
@@ -1452,27 +1428,8 @@ local function IsKeyDownNoclip()
     local buttons = UserInputService:GetMouseButtonsPressed()
     local Noclip = getgenv().Options["Noclip"] or Enum.KeyCode.X
     for _, button in pairs(buttons) do
-        if tostring(Noclip) == "MouseButton1" then
-            if (button.UserInputType.Name == "MouseButton1") then
-                return true
-            else
-                return false
-            end
-        end
-        if tostring(Noclip) == "MouseButton2" then
-            if (button.UserInputType.Name == "MouseButton2") then
-                return true
-            else
-                return false
-            end
-        end
-
-        if tostring(Noclip) == "MouseButton3" then
-            if (button.UserInputType.Name == "MouseButton3") then
-                return true
-            else
-                return false
-            end
+       if tostring(Noclip) == button.UserInputType.Name then
+           return true 
         end
     end
     if Noclip == "MouseButton1" or Noclip == "MouseButton2" or Noclip == "MouseButton3" then
@@ -1489,16 +1446,11 @@ UserInputService.InputBegan:Connect(function(inputObject, gameProcessedEvent)
 end
 end)
 --// Gun ignores
-local spoofCaller = game:GetService("Players").LocalPlayer.PlayerScripts.Client_Code.Client_Manager
-local gunIgnores = getrenv()._G.clientGunIgnores2
-local result = secureCall(gunIgnores, spoofCaller)
-cGunIgnores = {}
+cGunIgnores = {workspace.Debris, workspace.Map, workspace.Lobby, workspace:FindFirstChild("Loot_Spawns")}
 coroutine.wrap(function()
-    while wait(5) do
+    while wait(1) do
         if visibleCheck then
-        local spoofCaller = game:GetService("Players").LocalPlayer.PlayerScripts.Client_Code.Client_Manager
-        local gunIgnores = getrenv()._G.clientGunIgnores2
-        cGunIgnores = secureCall(gunIgnores, spoofCaller)
+            cGunIgnores = {workspace.Debris, workspace.Map, workspace.Lobby, workspace:FindFirstChild("Loot_Spawns")}
         end
     end
 end)()
