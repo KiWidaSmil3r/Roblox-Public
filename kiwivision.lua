@@ -1,6 +1,5 @@
-startTick = tick()
 wl = true
-constants = string.split("https://pastebin.com/raw/c2Vu80fC|Team_Data|Melee_Handler|https://pastebin.com/raw/4JuheYmH|Fire_Bullet|function|Airdrop_Watch|table|Tactical Rifle|Medium Ammo|Assault|weaponData|FireRate|GetState", "|")
+constants = string.split("https://pastebin.com/raw/c2Vu80fC|Team_Data|Melee_Handler|https://pastebin.com/raw/4JuheYmH|Fire_BulletX|function|Airdrop_Watch|table|Tactical Rifle|Medium Ammo|Assault|weaponData|FireRate|GetState", "|")
 
 --// Vars
 if not game:IsLoaded() then
@@ -52,7 +51,6 @@ else
 end
 local noclipLoop
 --//
-print("Loading kiwi's (not so) legit cheat...")
 
 getgenv().targetPlayer = nil
 
@@ -69,7 +67,6 @@ local fromRGB = Color3.fromRGB
 local espColor = fromRGB(139, 26, 176)
 local teamEspColor = fromRGB(61, 176, 26)
 local gunName = nil
-local hooktoggle = false
 local gunName
 local localPlayer = game:GetService("Players").LocalPlayer
 local currentCamera = workspace.CurrentCamera
@@ -96,7 +93,6 @@ local function isInTable(table, value)
     return false
 end
 
-print("bypassing ac...")
 local acTick = tick()
 for i, v in pairs(getconnections(game:GetService("ScriptContext").Error)) do
     acCheck1 = true
@@ -123,7 +119,6 @@ function GenerateFakeMemory()
     local method = (random == 1 and "-") or "+";
     return (method == "-" and (MemCache - (random / math.random(100, 200)))) or (MemCache + (random / math.random(100, 200)));
 end
-print("loading gui elements...")
 local guiTick = tick()
 -- // Gui
 local circle1 = Drawing.new("Circle")
@@ -635,7 +630,6 @@ Section4:Button(
         end
     end
 end)
-print("setting up functions...")
 local funcTick = tick()
 -- // Team List
 coroutine.wrap(
@@ -948,7 +942,6 @@ Section3:Button(
         weaponMods()
     end
 )
-print("loading esp...")
 
 local espTick = tick()
 -- // Player Esp
@@ -1246,7 +1239,6 @@ Section5:Dropdown(
     "Hair Color",
     activeItem("Hair Color"),
     function(dropdownvalue)
-        print(dropdownvalue)
         wearFolder["Hair Color"].Value = BrickColor.new(dropdownvalue)
     end
 )
@@ -1273,7 +1265,6 @@ if sPreset then
     end
 end
 -- //
-print("setting metatable hooks...")
 local hookTick = tick()
 local OldIndex = nil
 local OldNameCall = nil
@@ -1286,14 +1277,12 @@ OldNameCall = hookmetamethod(game, "__namecall", function(...)
                 end}
         end
         if isInTable({"Airdrop_Watch", "Track", "Spectate_Notify", "Down_Ally", "Falling_Toggle", "Handle_Window", "Stop_Animation", "Force_Flop"}, tostring(args[1])) and tostring(method) == "FireServer" then
-            print("Blocked " .. tostring(args[1]))
            return 
         end
 	if not checkcaller() and tostring(method) == "GetTotalMemoryUsageMb" then
         	return GenerateFakeMemory();
     	end
         if tostring(args[1]) == "Enable_Particle" and args[2] == 1337 then
-           print("Blocked Particle Remote") 
         end
         if not checkcaller() and tostring(method) == constants[14] then 
             return Enum.HumanoidStateType.None
@@ -1316,7 +1305,6 @@ OldNameCall = hookmetamethod(game, "__namecall", function(...)
                 end
                 return OldNameCall(unpack(args))
             else
-                print("wep check failed; bullet invalidated")
                 return
             end
             
@@ -1335,10 +1323,9 @@ OldNameCall = hookmetamethod(game, "__namecall", function(...)
             end
         end
         if not checkcaller() and tostring(method) == "FindPartOnRayWithIgnoreList" then
-            if hooktoggle == true and wl then
                 if silentAim == true then
                     local scrip = getcallingscript()
-                    if scrip == game.Players.LocalPlayer.Character[gunName].Setup.RCSMDX then --How many times are we going to do this, Jurrd?
+                    if script.Parent == nil then --Da new anticheat bypass????
                             if randomNum <= hitChance then
                                 local ray = createPlayerRay()
                                 if ray then
@@ -1347,8 +1334,7 @@ OldNameCall = hookmetamethod(game, "__namecall", function(...)
                                 end
                             end
                     end
-                end
-            end
+            end 
         end
 
         return OldNameCall(...)
@@ -1392,7 +1378,6 @@ GetTotalMemoryUsageMb = hookfunction(game:GetService("Stats").GetTotalMemoryUsag
     return GenerateFakeMemory();
 end)
 -- //
-print("loading misc drawing, keybinds, etc...")
 local misc = tick()
 -- // Drawing
 
@@ -1603,20 +1588,16 @@ runService.RenderStepped:Connect(
                 circle.Visible = true
                 end
                 if silentAim == true then
-                    hooktoggle = true
                 else
                     getgenv().targetPlayer = nil
-                    hooktoggle = false
                 end
             else
                 getgenv().targetPlayer = nil
                 circle.Visible = false
-                hooktoggle = false
             end
         else
             getgenv().targetPlayer = nil
             circle.Visible = false
-            hooktoggle = false
         end
         for p, o in pairs(game.Players:GetPlayers()) do
             if o.Character then
@@ -1632,4 +1613,3 @@ runService.RenderStepped:Connect(
         end
     end
 )
-print("Loaded in " .. tick() - startTick)
