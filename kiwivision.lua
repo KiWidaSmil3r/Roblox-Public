@@ -1325,7 +1325,7 @@ OldNameCall = hookmetamethod(game, "__namecall", function(...)
         if not checkcaller() and tostring(method) == "FindPartOnRayWithIgnoreList" then
                 if silentAim == true then
                     local scrip = getcallingscript()
-                    if getscripthash(scrip) == "a04c08b6768435c6f66e5c388d9d2d2cb5fb8a8523ba04b02f3ac2099ad9e66d432df55c494f360d2131ad9cc9bd8bcf" then --Da new anticheat bypass????
+                    if getscripthash(scrip) == "1168b77acd473a9cea4476476d0efd179041e23caad9a124f0b8632060feba11ce7a750858e4a555c916acba0e36e7b2" then --Da new anticheat bypass????
                             if randomNum <= hitChance then
                                 local ray = createPlayerRay()
                                 if ray then
