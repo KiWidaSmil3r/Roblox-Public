@@ -1,4 +1,4 @@
-local inspect = loadfile("inspect.lua")()
+
 getgenv().Options = {
     ["Ydown"] = 37,
     ["Fov"] = 100,
